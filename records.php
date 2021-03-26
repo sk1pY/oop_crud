@@ -45,7 +45,7 @@
                     <td><?php echo $row['address']?></td>
                     <td>
                         <a href="delete.php?id=<?php echo $row['id']?>" class="btn btn-danger">Удалить</a>
-                        <a href="update.php?id=<?php $row['id']?>" class="btn btn-success">Изменить</a>
+                        <a href="edit.php?id=<?php echo $row['id']?>" class="btn btn-success">Изменить</a>
 
                     </td>
                 </tr>

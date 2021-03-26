@@ -55,4 +55,23 @@ class Model{
                 return false;
              }
      }
+     public function edit($id){
+         $data = null;
+         $query = "SELECT * FROM crud where id ='$id'";
+         if($res = $this->conn->query($query)){
+             while($row = $res->fetch_assoc()){
+                    $data = $row;
+             }
+         }
+         return $data;
+     }
+     public function update($data){
+        $query = "UPDATE crud SET name = '$data[name]' , email = '$data[email]',mobile = '$data[mobile]',address = '$data[address]' where id ='$data[id]'";
+        if($res = $this->conn->query($query)){
+            return true;
+        }else{
+            return false;
+        }
+
+     }
 }

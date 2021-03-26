@@ -11,44 +11,65 @@
     <title>OOP crud</title>
 </head>
 <body>
-
 <div class="container">
     <div class="row">
         <div class="col-md-12 mt-5">
-            <a href="records.php" class="btn btn-primary">Main</a>
             <div class="text-center">
                 <h1>PHP OOP CRUD</h1>
                 <hr style="height: 1px;color:black;background-color: black;">
-                </div>
+            </div>
         </div>
     </div>
     <div class="row">
-
         <div class="col-md-5 mx-auto">
             <?php
             include "model.php";
             $model = new model();
-            $model ->insert();
+            $id = $_REQUEST['id'];
+            $row = $model->edit($id);
+
+            if(isset($_POST['submit'])){
+                if(isset($_POST['name']) && isset($_POST['email']) && isset($_POST['mobile']) && isset($_POST['address'])){
+                    if(!empty($_POST['name']) && !empty($_POST['email']) && !empty($_POST['mobile']) && !empty($_POST['address'])){
+                        $data['id'] = $id;
+                        $data['name'] = $_POST['name'];
+                        $data['mobile'] = $_POST['mobile'];
+                        $data['email'] = $_POST['email'];
+                        $data['address'] = $_POST['address'];
+
+                        $update = $model->update($data);
+                        if($update){
+                            echo 'UPDATED';
+                            header('location:  /records.php');
+                        }else{
+                            echo 'NE UPDATED';
+                        }
+
+                    }else{
+                        echo 'emty data';
+                    }
+                }
+            }
             ?>
             <form action="" method="post">
                 <div class="form-group">
                     <label for="">Name</label>
-                    <input type="text" class="form-control" name = 'name'>
+                    <input type="text" class="form-control" name = 'name' value="<?php echo $row['name']?>">
                 </div>
                 <div class="mt-3 form-group">
                     <label for="">Email</label>
-                    <input type="text" class="form-control" name = 'email'>
+                    <input type="text" class="form-control" name = 'email' value="<?php echo $row['email']?>">
                 </div>
                 <div class="mt-3 form-group">
                     <label for="">Mobile</label>
-                    <input type="text" class="form-control" name = 'mobile'>
+                    <input type="text" class="form-control" name = 'mobile' value="<?php echo $row['mobile']?>">
                 </div>
                 <div class="mt-3 form-group">
                     <label for="">Address</label>
-                    <textarea name="address" id="" cols="30" rows="3" class="form-control"></textarea>
+                    <textarea name="address" id="" cols="30" rows="3" class="form-control" ><?php echo $row['address']?></textarea>
                 </div>
                 <div class="mt-3 form-group">
-                    <button type="submit" name="submit" class="btn btn-primary">Submit</button>
+                    <button type="submit" name="submit" " class="btn btn-primary">Submit</button>
                 </div>
             </form>
         </div>
